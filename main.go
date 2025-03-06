@@ -10,7 +10,7 @@ import (
 	"go.uber.org/zap"
 )
 
-func main() {
+func main2() {
 	fx.New(
 		fx.Provide(
 			NewHTTPServer,
