@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"errors"
 	"reflect"
 	mocks "testify-examples/mocks/repository"
 	"testify-examples/models"
@@ -52,7 +53,7 @@ func TestRepository_UpdatePayment(t *testing.T) {
 			if !tt.wantErr {
 				repo.On("UpdatePayment", tt.args.id, tt.args.payment).Return(tt.want, nil)
 			} else {
-				repo.On("UpdatePayment", tt.args.id, tt.args.payment).Return(models.Payment{}, nil)
+				repo.On("UpdatePayment", tt.args.id, tt.args.payment).Return(tt.want, errors.New("Failed to update payment"))
 			}
 			got, err := repo.UpdatePayment(tt.args.id, tt.args.payment)
 			if (err != nil) != tt.wantErr {
@@ -101,7 +102,7 @@ func TestRepository_DeletePayment(t *testing.T) {
 			if !tt.wantErr {
 				repo.On("DeletePayment", tt.args.id).Return(tt.want, nil)
 			} else {
-				repo.On("DeletePayment", tt.args.id).Return(int64(0), nil)
+				repo.On("DeletePayment", tt.args.id).Return(tt.want, errors.New("Failed to delete payment"))
 			}
 			got, err := repo.DeletePayment(tt.args.id)
 			if (err != nil) != tt.wantErr {
@@ -155,7 +156,7 @@ func TestRepository_SelectPaymentWIthId(t *testing.T) {
 			if !tt.wantErr {
 				repo.On("SelectPaymentWIthId", tt.args.id).Return(tt.want, nil)
 			} else {
-				repo.On("SelectPaymentWIthId", tt.args.id).Return(models.Payment{}, nil)
+				repo.On("SelectPaymentWIthId", tt.args.id).Return(tt.want, errors.New("Failed to select payment with id"))
 			}
 			got, err := repo.SelectPaymentWIthId(tt.args.id)
 			if (err != nil) != tt.wantErr {
@@ -207,7 +208,7 @@ func TestRepository_CreatePayment(t *testing.T) {
 			if !tt.wantErr {
 				repo.On("CreatePayment", tt.args.payment).Return(tt.want, nil)
 			} else {
-				repo.On("CreatePayment", tt.args.payment).Return(int64(0), nil)
+				repo.On("CreatePayment", tt.args.payment).Return(tt.want, errors.New("Failed to create payment"))
 			}
 			got, err := repo.CreatePayment(tt.args.payment)
 			if (err != nil) != tt.wantErr {
